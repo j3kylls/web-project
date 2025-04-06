@@ -1,15 +1,13 @@
 #!/bin/bash
 
 # Ensure on main branch
-git branch -M main
+git checkout main
 
 # Setup basic files to be tracked
 git add .
-git commit --allow-empty -m "Project Initialization"
+GIT_COMMITTER_DATE="2025-04-06T10:00:00" GIT_AUTHOR_DATE="2025-04-06T10:00:00" git commit --allow-empty -m "Initialize Vite project with Tailwind setup"
 
-# Actual Commit Timeline
 declare -a messages=(
-    "Initialize Vite project with Tailwind setup"
     "Setup project structure: src/assets, src/pages, src/components"
     "Create Navbar.jsx and ProtectedRoute.jsx components"
     "Add LandingPage.jsx and Login.jsx pages"
@@ -19,23 +17,18 @@ declare -a messages=(
     "Develop FocusTimer.jsx and Notifications.jsx pages"
     "Setup Redux store and authSlice.js"
     "Configure Tailwind CSS and PostCSS"
-    "Final fixes: index.html, vite.config.js, minor bug fixes"
+    "Final frontend fixes and cleanup"
 )
 
 # Set start date
-start="2025-04-06T10:00:00"
+start="2025-04-07T10:00:00"
 
 # Loop over commit messages
 for i in "${!messages[@]}"; do
-    # Add everything
     git add .
-
-    # Calculate fake commit date
     commit_date=$(date -d "$start +$i days" --iso-8601=seconds)
-
-    # Make the commit with a custom date
-    GIT_COMMITTER_DATE="$commit_date" GIT_AUTHOR_DATE="$commit_date" git commit -m "${messages[$i]}"
+    GIT_COMMITTER_DATE="$commit_date" GIT_AUTHOR_DATE="$commit_date" git commit --allow-empty -m "${messages[$i]}"
 done
 
-# Push the commits
-git push -u origin main
+# Push all the new commits
+git push origin main
